@@ -1,0 +1,79 @@
+# 格式：类型(首字母) -> 模式
+# 关键字
+K -> int
+K -> double
+K -> float
+K -> if
+K -> else
+K -> while
+K -> return
+K -> void
+K -> for
+K -> break
+K -> continue
+K -> true
+K -> false
+K -> null
+K -> const
+K -> static
+K -> extern
+K -> sizeof
+K -> typedef
+K -> struct
+K -> union
+K -> enum
+K -> switch
+K -> case
+K -> default
+K -> goto
+K -> do
+K -> volatile
+K -> register
+K -> inline
+K -> asm
+K -> namespace
+K -> using
+K -> class
+K -> public
+K -> private
+K -> protected
+K -> main
+
+# 运算符
+O -> +
+O -> -
+O -> *
+O -> /
+O -> =
+O -> ==
+O -> !=
+O -> <
+O -> <=
+O -> >
+O -> >=
+
+# 限定符
+L -> ;
+L -> ,
+L -> (
+L -> )
+L -> {
+L -> }
+L -> [
+L -> ]
+
+# 标识符规则（字母或下划线开头，后跟字母、数字或下划线）
+I -> [a-zA-Z_][a-zA-Z0-9_]*
+
+# 常量规则
+# 整数
+C -> [0-9]+
+# 浮点数
+C -> [0-9]+\.[0-9]+
+# 科学计数法
+C -> [0-9]+(\.[0-9]+)?[eE][+-]?[0-9]+
+# 复数
+C -> [0-9]+(\.[0-9]+)?[+-][0-9]+(\.[0-9]+)?i
+# 错误处理规则（可选，用于明确指出错误情况）
+# 数字开头的标识符（非法）
+E -> [0-9]+[a-zA-Z_][a-zA-Z0-9_]*

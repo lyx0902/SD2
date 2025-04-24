@@ -1,0 +1,20 @@
+void main() {
+    int a = 42;
+    double pi = 3.14159;
+    float e = 2.71828e-3;
+    float complex_num = 3.14+2.0i;
+    int 1fesd;
+
+    if (a > 0) {
+        while (a > 0) {
+            a = a - 1;
+        }
+    }
+    a = a % 10;
+    int array [ 10 ];
+    for (int i = 0; i < 10; i = i + 1) {
+        array[i] = i * 2;
+    }
+
+    return 0;
+}

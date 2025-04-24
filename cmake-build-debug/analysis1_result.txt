@@ -1,0 +1,115 @@
+Grammar Productions:
+-------------------
+0: S' -> S 
+1: S -> a A d 
+2: S -> b B d 
+3: S -> a B e 
+4: S -> b A e 
+5: A -> c 
+6: B -> c 
+
+First Sets:
+-----------
+FIRST(A) = { c }
+FIRST(B) = { c }
+FIRST(S) = { a b }
+FIRST(S') = { a b }
+
+Follow Sets:
+-----------
+FOLLOW(A) = { d e }
+FOLLOW(B) = { d e }
+FOLLOW(S) = { # }
+FOLLOW(S') = { # }
+
+LR(1) Item Sets:
+---------------
+State 0:
+    S' -> · S , { # }
+    S -> · a A d , { # }
+    S -> · b B d , { # }
+    S -> · a B e , { # }
+    S -> · b A e , { # }
+
+State 1:
+    S' -> S · , { # }
+
+State 2:
+    S -> a · A d , { # }
+    S -> a · B e , { # }
+    A -> · c , { d, # }
+    B -> · c , { e, # }
+
+State 3:
+    S -> b · B d , { # }
+    S -> b · A e , { # }
+    A -> · c , { e, # }
+    B -> · c , { d, # }
+
+State 4:
+    S -> a A · d , { # }
+
+State 5:
+    S -> a B · e , { # }
+
+State 6:
+    A -> c · , { d, # }
+    B -> c · , { e, # }
+
+State 7:
+    S -> b B · d , { # }
+
+State 8:
+    S -> b A · e , { # }
+
+State 9:
+    A -> c · , { e, # }
+    B -> c · , { d, # }
+
+State 10:
+    S -> a A d · , { # }
+
+State 11:
+    S -> a B e · , { # }
+
+State 12:
+    S -> b B d · , { # }
+
+State 13:
+    S -> b A e · , { # }
+
+Action Table:
+-------------
+State	a	b	c	d	e	#	#
+0	s2	s3					
+1						acc	acc
+2			s6				
+3			s9				
+4				s10			
+5					s11		
+6				r5	r6	r6	r6
+7				s12			
+8					s13		
+9				r6	r5	r6	r6
+10						r1	r1
+11						r3	r3
+12						r2	r2
+13						r4	r4
+
+Goto Table:
+-----------
+State	A	B	S	
+0			1	
+1				
+2	4	5		
+3	8	7		
+4				
+5				
+6				
+7				
+8				
+9				
+10				
+11				
+12				
+13				

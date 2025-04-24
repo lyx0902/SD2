@@ -1,0 +1,13 @@
+S -> A
+A -> A + B
+A -> A - B
+A -> B
+B -> B * C
+B -> B / C
+B -> C
+C -> ( A )
+C -> D
+D -> D ^ E
+D -> E
+E -> id
+E -> num

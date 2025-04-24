@@ -1,0 +1,1 @@
+while ( id ^ [ num + id ] ) do let x = func ( num , id * num )

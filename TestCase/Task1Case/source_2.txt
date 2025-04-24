@@ -1,0 +1,16 @@
+void testComplex() {
+    // 测试各种数值类型
+    float scientific1 = 1.23e+5;
+    double scientific2 = 6.022e-23;
+    float complex1 = 2.5+1.5i;
+    float complex2 = 3.14-2.718i;
+
+    // 混合计算
+    float result = scientific1 * 2.0;
+    complex1 = complex1 + complex2;
+
+    // 数组操作
+    float values[5];
+    values[0] = 1.0e-6;
+    values[1] = 2.718+0.5i;
+}

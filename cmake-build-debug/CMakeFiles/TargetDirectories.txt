@@ -1,0 +1,4 @@
+D:/CLionProjects/SD2/cmake-build-debug/CMakeFiles/Task1.dir
+D:/CLionProjects/SD2/cmake-build-debug/CMakeFiles/Task2.dir
+D:/CLionProjects/SD2/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/CLionProjects/SD2/cmake-build-debug/CMakeFiles/rebuild_cache.dir

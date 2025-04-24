@@ -1,0 +1,25 @@
+int testControl() {
+    int sum = 0;
+    int i = 0;
+    int 1fesd;
+
+    while (i < 100) {
+        if (i % 2 == 0) {
+            if (i % 3 == 0) {
+                sum = sum + i;
+            } else {
+                sum = sum - i;
+            }
+        }
+        i = i + 1;
+    }
+
+    switch (sum) {
+        case 0:
+            return 1;
+        case 1:
+            return 2;
+        default:
+            return 0;
+    }
+}

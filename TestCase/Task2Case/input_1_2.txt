@@ -1,0 +1,1 @@
+if ( num + id * num ) then func ( num , id ) else num ^ [ id ]

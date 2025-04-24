@@ -1,0 +1,22 @@
+S -> E
+E -> E + T
+E -> E - T
+E -> T
+T -> T * F
+T -> T / F
+T -> F
+F -> ( E )
+F -> num
+F -> id
+F -> F ^ P
+P -> P * Q
+P -> Q
+Q -> [ E ]
+Q -> { L }
+L -> L , E
+L -> E
+E -> func ( L )
+E -> if E then E else E
+E -> while E do E
+V -> id
+E -> let V = E

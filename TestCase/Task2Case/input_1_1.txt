@@ -1,0 +1,1 @@
+num * id ^ [ num + id ] * { num , id , num - func ( num ) }

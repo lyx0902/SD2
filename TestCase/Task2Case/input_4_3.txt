@@ -1,0 +1,1 @@
+num ^ id * ( num + id ) / id - num * ( id ^ num + id )
