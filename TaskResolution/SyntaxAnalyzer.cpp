@@ -556,9 +556,14 @@ bool SyntaxAnalyzer::analyze(const std::vector<TokenInfo>& tokens) {
         }
 
         // 构建符号栈字符串
-        std::string symbolStackStr;
-        for (const auto& sym : symbolStack) {
-            symbolStackStr += sym.name + " ";
+        std::string symbolStackStr="#";
+        if (!symbolStack.empty()) {
+            symbolStackStr += " "; // 如果符号栈不为空，在 # 后加一个空格
+            for (const auto& sym : symbolStack) {
+                symbolStackStr += sym.name + " ";
+            }
+        } else {
+            symbolStackStr += " "; // 如果符号栈为空，确保 # 后面有一个空格，显示为 "# "
         }
 
         // 构建剩余输入串

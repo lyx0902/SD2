@@ -12,13 +12,13 @@ int main() {
     SyntaxAnalyzer analyzer;
 
     // 2. 加载文法规则
-    if (!analyzer.loadGrammar("../TestCase/Task2Case/grammar_4.txt")) {
+    if (!analyzer.loadGrammar("../TestCase/Task2Case/grammar_5.txt")) {
         std::cerr << "Failed to load grammar.txt file!" << std::endl;
         return 1;
     }
 
     // 3. 读取源代码文件并进行词法分析
-    std::ifstream source_file("../TestCase/Task2Case/input_4_2.txt");
+    std::ifstream source_file("../TestCase/Task2Case/input_5_1.txt");
     if (!source_file.is_open()) {
         std::cerr << "Error: Could not open source code file!" << std::endl;
         return 1;
