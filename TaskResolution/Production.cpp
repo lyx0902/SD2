@@ -1,5 +1,6 @@
 #include "Production.h"
 
+//处理产生式输出
 std::string Production::toString() const {
     std::string result = left.name + " -> ";
     for (const auto& symbol : right) {

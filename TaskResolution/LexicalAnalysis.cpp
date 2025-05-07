@@ -88,6 +88,7 @@ void LexicalAnalysis::buildNFA(const std::string& grammar_file) {
 }
 
 std::shared_ptr<NFAState> LexicalAnalysis::createNFAForPattern(
+    //为单个正则表达式模式创建一个NFA片段，并指定其接受状态对应的 TokenType。
     const std::string& pattern, TokenType type) {
     auto start = std::make_shared<NFAState>();
     auto end = std::make_shared<NFAState>();
@@ -103,7 +104,9 @@ std::shared_ptr<NFAState> LexicalAnalysis::createNFAForPattern(
     // 如果是简单的关键字、运算符或限定符
     if (pattern.find('[') == std::string::npos) {
         std::shared_ptr<NFAState> current = start;
-
+        //从 start 状态开始，为模式中的每个字符创建一个或多个状态和转换。
+        //如果字符是转义字符 \，则跳过它并处理下一个字符。
+        //对于模式中的每个非转义字符，创建一个到下一个状态的转换。如果不是模式的最后一个字符，则创建一个新的中间状态；如果是最后一个字符，则转换到 end 状态。
         for (size_t i = 0; i < pattern.length(); i++) {
             if (pattern[i] == '\\' && i + 1 < pattern.length()) {
                 i++;
@@ -123,6 +126,13 @@ std::shared_ptr<NFAState> LexicalAnalysis::createNFAForPattern(
     else {
         // 特殊处理标识符规则 [a-zA-Z_][a-zA-Z0-9_]*
         if (type == IDENTIFIER) {
+            /*
+            * 标识符 (IDENTIFIER): 硬编码实现了一个NFA来匹配 [a-zA-Z_][a-zA-Z0-9_]* 这样的模式。
+            创建一个中间状态 middle。
+            从 start 状态到 middle 状态添加对所有首字符（a-z, A-Z, _）的转换。
+            从 middle 状态到其自身添加对所有后续字符（a-z, A-Z, 0-9, _）的转换（表示 * 闭包）。
+            从 middle 状态到 end 状态也添加对所有后续字符的转换（匹配最后一个字符）以及一个ε转换（允许空串的后续部分，即匹配单个首字符的情况）。
+             */
             auto middle = std::make_shared<NFAState>();
             middle->id = nfa_states.size();
             nfa_states.push_back(middle);
@@ -152,6 +162,18 @@ std::shared_ptr<NFAState> LexicalAnalysis::createNFAForPattern(
         }
         // 处理常量规则
         else if (type == CONSTANT) {
+            /*
+            * 常量 (CONSTANT): 硬编码实现了一个NFA来匹配数字（整数和可选的浮点数）。
+            创建一个数字状态 num_state。
+            从 start 状态到 num_state 添加对所有数字（0-9）的转换。
+            从 num_state 到其自身添加对所有数字的转换（匹配多位数字）。
+            从 num_state 到 end 添加一个ε转换（数字部分结束）。
+            如果模式中包含 . (表示可能是浮点数)：
+            创建一个小数状态 decimal_state。
+            从 num_state 到 decimal_state 添加对 . 的转换。
+            从 decimal_state 到其自身添加对所有数字的转换（匹配小数点后的数字）。
+            从 decimal_state 到 end 添加一个ε转换。
+             */
             // 处理整数和浮点数
             auto num_state = std::make_shared<NFAState>();
             num_state->id = nfa_states.size();
@@ -182,6 +204,27 @@ std::shared_ptr<NFAState> LexicalAnalysis::createNFAForPattern(
 }
 
 void LexicalAnalysis::convertNFAtoDFA() {
+    /*
+    *初始化一个映射 dfaStates 用于存储NFA状态集到对应DFA状态的映射，以及一个工作队列 workList。
+    计算NFA起始状态 nfa_start 的ε闭包，得到初始的NFA状态集 initial_states。
+    创建一个DFA起始状态 dfa_start，设置其ID，并将其与 initial_states 关联存入 dfaStates 和 dfa_states，然后将 initial_states 加入 workList。
+    循环处理 workList 直到为空：
+    从队列中取出一个NFA状态集 current_states，并获取其对应的DFA状态 current_dfa。
+    确定 current_dfa 是否为终态：遍历 current_states 中的所有NFA状态，如果任一NFA状态是终态，则 current_dfa 也是终态，并将其 token_type 设置为第一个遇到的NFA终态的 token_type。
+    收集 current_states 中所有NFA状态可以通过非ε转换到达的输入字符集合 inputs。
+    对每个输入字符 input：
+    计算 move(current_states, input)，得到通过字符 input 可以到达的NFA状态集 moved_states。
+    如果 moved_states 为空，则跳过。
+    计算 moved_states 的ε闭包，得到 next_states。
+    如果 next_states 为空，则跳过。
+    检查 next_states 是否已经对应一个DFA状态：
+    如果 dfaStates 中不存在 next_states：
+    创建一个新的DFA状态 new_state，分配ID。
+    确定 new_state 是否为终态及其 token_type（方法同上）。
+    将 new_state 与 next_states 关联存入 dfaStates 和 dfa_states，并将 next_states 加入 workList。
+    在 current_dfa 的转换表 transitions 中添加一条从 input 到 dfaStates[next_states]（即新创建或已存在的DFA状态）的转换。
+     *
+     */
     // 子集构造法
     std::map<std::set<std::shared_ptr<NFAState>>, std::shared_ptr<DFAState>> dfaStates;
     std::queue<std::set<std::shared_ptr<NFAState>>> workList;
@@ -490,7 +533,7 @@ std::set<std::shared_ptr<NFAState>> LexicalAnalysis::getEpsilonClosure(
     for (const auto& state : states) {
         stack.push(state);
     }
-
+    //使用一个栈 stack 来进行深度优先搜索。将输入 states 中的所有状态压入栈。
     // 处理所有的ε转换
     while (!stack.empty()) {
         auto current = stack.top();
@@ -504,6 +547,11 @@ std::set<std::shared_ptr<NFAState>> LexicalAnalysis::getEpsilonClosure(
                 stack.push(next);
             }
         }
+        /*
+        *   弹出一个NFA状态 current。
+        *   遍历 current 状态的所有ε转换 (epsilon_transitions) 指向的 next 状态。
+        *   如果 next 状态不在 closure 集合中，则将其加入 closure 并压入栈中，以便继续探索其ε转换。
+         */
     }
 
     return closure;
@@ -523,5 +571,9 @@ std::set<std::shared_ptr<NFAState>> LexicalAnalysis::move(
             }
         }
     }
+    /*
+     * move 操作也是NFA到DFA转换（子集构造算法）中的一个核心操作。它与 getEpsilonClosure 配合使用，
+     * T = ε-closure(move(S, c)) 表示从DFA状态S（对应NFA状态集S）在输入字符c上转换到的下一个DFA状态T（对应NFA状态集T）。
+     */
     return result;
 }

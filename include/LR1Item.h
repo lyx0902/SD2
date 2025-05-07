@@ -12,12 +12,12 @@ struct LR1Item {
     // 修改构造函数，使用引用和新的参数类型
     LR1Item(const Production& p, size_t pos, const std::set<Symbol>& look)
         : prod(p), dotPosition(pos), lookahead(look) {}
-
-    std::string toString() const;
-    bool operator==(const LR1Item& other) const;
-    bool operator<(const LR1Item& other) const;
-    Symbol getNextSymbol() const;
-    bool isComplete() const;
+    // 修改构造函数，使用引用和新的参数类型，重载toString()函数与对应的运算符
+    std::string toString() const;// 将LR1Item转换为字符串
+    bool operator==(const LR1Item& other) const; // 比较两个LR1Item是否相等
+    bool operator<(const LR1Item& other) const; // 比较两个LR1Item的大小
+    Symbol getNextSymbol() const; // 获取下一个符号
+    bool isComplete() const; // 判断LR1Item是否完成
 };
 
 #endif //SD2_LR1ITEM_H

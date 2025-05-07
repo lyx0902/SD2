@@ -10,18 +10,18 @@ struct TokenInfo {
     TokenType type;
     std::string value;
     int lineNumber;
-};
+};// 词法分析器的Token信息结构体
 
 class SyntaxAnalyzer {
 public:
     SyntaxAnalyzer();
 
-    bool loadGrammar(const std::string& filename);
-    bool analyze(const std::vector<TokenInfo>& tokens);
-    void outputResult(const std::string& filename) const;
+    bool loadGrammar(const std::string& filename);  // 加载文法文件，返回是否成功，对输入的语法信息进行规范化处理
+    bool analyze(const std::vector<TokenInfo>& tokens); // 语法分析函数，接收Token信息的向量作为参数，执行主体的语法分析
+    void outputResult(const std::string& filename) const; // 输出分析结果到文件中以备不时之需，目前该功能已被弃用，不再维护
     void printTokensAndFirstSets() const;  // 打印词法token和First集
     void printLR1Table() const;           // 打印LR(1)分析表
-    void printItemSets() const;
+    void printItemSets() const;           // 打印LR(1)项目集
 
 private:
     std::vector<Production> productions;
@@ -47,6 +47,7 @@ private:
     bool addToFollowSet(const Symbol& symbol, const Symbol& followSymbol);
     bool addToFollowSet(const Symbol& symbol, const std::set<Symbol>& followSymbols);
 
+    // 计算LR(1)分析表相关的辅助函数
     void computeFirstSets();
     void computeFollowSets();
     void buildLR1Automaton();

@@ -832,7 +832,6 @@ void SyntaxAnalyzer::printItemSets() const {
             // 打印向前看符号
             for (const auto& symbol : item.lookahead) {
                 if (symbol.type == END_MARKER) {
-                    // 只有当向前看符号集合中只有#时才显示#
                     if (hasOnlyEndMarker) {
                         std::cout << symbol.name << " ";
                     }

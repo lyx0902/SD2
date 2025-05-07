@@ -86,3 +86,9 @@
 1467	3570	7671865874164499	Task2.exe	a030b946c599595f
 4	1373	7671880375539561	CMakeFiles/Task2.dir/TaskResolution/Task2.cpp.obj	1032fbb13a946c6e
 1373	3514	7671880389236324	Task2.exe	a030b946c599595f
+23	4877	7683248755539259	CMakeFiles/Task2.dir/TaskResolution/Production.cpp.obj	b8d2c6bb6accf2a4
+28	4878	7683248755595233	CMakeFiles/Task2.dir/TaskResolution/LR1Item.cpp.obj	1e05738acaef33e1
+40	4976	7683248755715922	CMakeFiles/Task2.dir/TaskResolution/LexicalAnalysis.cpp.obj	be99b3f1ae32985c
+34	5067	7683248755655157	CMakeFiles/Task2.dir/TaskResolution/SyntaxAnalyzer.cpp.obj	be9eb1a94d7f411f
+10	5094	7683248755410134	CMakeFiles/Task2.dir/TaskResolution/Task2.cpp.obj	1032fbb13a946c6e
+5095	10195	7683248806251687	Task2.exe	a030b946c599595f
