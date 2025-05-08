@@ -19,9 +19,13 @@
 **识别出来是**
 
 (Line: 5, Type: Constant, Value: 2.0)
+
 (Line: 5, Type: Operator, Value: -)
+
 (Line: 5, Type: Constant, Value: 3.0)
+
 (Line: 5, Type: Operator, Value: *)
+
 (Line: 5, Type: Identifier, Value: i)
 
 注意在本代码中是以空格为分隔符，故而之于正常的写代码习惯有一定区别，留给后人进行todo
