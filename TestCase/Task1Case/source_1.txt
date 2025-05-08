@@ -2,7 +2,7 @@ void main() {
     int a = 42;
     double pi = 3.14159;
     float e = 2.71828e-3;
-    float complex_num = 3.14+2.0i;
+    float complex_num = 2.0-3.0i;
     int 1fesd;
 
     if (a > 0) {
